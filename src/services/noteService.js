@@ -15,9 +15,7 @@ export async function addNoteApi({ title, content }){
         return data
         
     }catch(e){
-        console.log(e)
-        
-return e.response.data
+        throw(e)
     }
 
 }
@@ -57,7 +55,7 @@ export async function DeleteUserNotes(noteID){
     }catch(e){
         console.log(e)
         
-return e.response.data
+        throw(e)
     }
 
 }

@@ -5,11 +5,11 @@ export async function registerApi(formData){
     try{
         
         const {data}=await axios.post(baseUrl + "signUp",formData)
-        console.log(data)
+      //  console.log(data)
         return data
         
     }catch(e){
-return e.response.data
+        throw(e)
     }
 
 }
@@ -19,10 +19,10 @@ export async function loginApi(formData){
     try{
         
         const res=await axios.post(baseUrl + "signIn",formData)
-        console.log(res)
+       // console.log(res)
         return res.data
     }catch(e){
-        return e
+        throw(e)
 //return e.response ? e.response.data.error : e.message
     }
 

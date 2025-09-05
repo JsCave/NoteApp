@@ -29,15 +29,11 @@ const{handleSubmit,register,formState:{errors}}=useForm({
    async function handleRegister(formData){
     setIsLoading(true)
       const data=await  registerApi(formData)
-      setIsLoading(false)
-      if(data.msg=="done"){
-        setErrMsg("")
-        setSuccessMsg('You Created Account Succesfully')
-      }else{
-        setSuccessMsg('')
-        setErrMsg(data.msg)
-    }
-console.log(data)
+      .then((res)=>{console.log(res);setErrMsg("");setSuccessMsg('You Created Account Succesfully')})
+      .catch((e)=>{setSuccessMsg('');setErrMsg(e.response.data.msg)} )
+      .finally(()=>{setIsLoading(false)})
+      
+
 
     }
 

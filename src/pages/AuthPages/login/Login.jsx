@@ -30,16 +30,13 @@ export default function Login() {
      async function handleLogin(formData){
       setIsLoading(true)
         const data=await  loginApi(formData)
-        setIsLoading(false)
-     if(data.msg=="done"){
-          localStorage.setItem('token',data.token)
-          setIsLoggedIn(true)
-          navigate('/')
-      }else{
-          setErrMsg(data.msg)
-      }
-  console.log(data)
-  
+        .then((res)=>{
+            localStorage.setItem('token',res.token)
+            setIsLoggedIn(true)
+            navigate('/')
+        })
+        .catch((e)=>{setErrMsg(e.response.data.msg) })
+        .finally(()=>{setIsLoading(false)})  
       }
       return(
           <>
@@ -51,7 +48,7 @@ export default function Login() {
   <Input isInvalid={Boolean(errors.password?.message)} errorMessage={errors.password?.message} label="Password" placeholder="Password" type="password" variant="bordered"  {...register('password')}/>
   
   <Button type='submit' isLoading={isLoading}  color="primary" variant="solid">Login</Button>
-  {errMsg && <p className="bg-red-500 text-red-950">{errMsg}</p>}
+  {errMsg && <p className="bg-red-300 text-red-950 w-full ">{errMsg}</p>}
   <Link to={"/register"}>Create Account</Link>
   </form>
           </div>
