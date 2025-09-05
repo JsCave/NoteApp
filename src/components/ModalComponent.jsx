@@ -26,13 +26,19 @@ export default function ModalComponent({isOpen,onOpenChange,typeOfOp,getUserNote
     if (title) formData.append("title", title)
     if (content) formData.append("content", content)
     setLoading(true)
-   const response=typeOfOp=='new'?await addNoteApi({ title, content}):await UpdateUserNotes({ title, content,NoteId})
-   // console.log(response)
+   const response=await (typeOfOp === "new"? addNoteApi({ title, content }): UpdateUserNotes({ title, content, NoteId }))
+   .then(async(res)=>{
     await getUserNotes()
     setTitle('')
     setContent('')
     onClose()
+   })
+   .catch((e)=>{console.log(e.response.data.msg)})
+   .finally(()=>{
     setLoading(false)
+   })
+   // console.log(response)
+
     }
 
     async function deleteNote(){
